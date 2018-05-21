@@ -174,3 +174,33 @@ INSERT INTO `towns` (`id`, `towns`) VALUES
 (153, 'Defence'),
 (154, 'Calvary Ground'),
 (155, 'Islamnagar');
+
+
+
+
+INSERT INTO `data_sets` (`id`, `admin_id`, `category`, `brand`, `location`, `month`, `created_at`, `updated_at`) VALUES
+(2, 1, 't shirt', 'levis', 'Kot Mohibbu', 'january', '2018-05-20 13:42:17', '2018-05-20 13:42:17'),
+(3, 1, '0', '0', '0', 'january', NULL, NULL),
+(4, 1, '0', '0', '0', 'february', NULL, NULL),
+(5, 1, '0', '0', '0', 'february', NULL, NULL),
+(6, 1, '0', '0', '0', 'march', NULL, NULL),
+(7, 1, '0', '0', '0', 'april', NULL, NULL),
+(8, 1, '0', '0', '0', 'may', NULL, NULL),
+(9, 1, '0', '0', '0', 'june', NULL, NULL),
+(10, 1, '0', '0', '0', 'july', NULL, NULL),
+(11, 1, '0', '0', '0', 'august', NULL, NULL),
+(12, 1, '0', '0', '0', 'september', NULL, NULL),
+(13, 1, '0', '0', '0', 'october', NULL, NULL),
+(14, 1, '0', '0', '0', 'november', NULL, NULL),
+(15, 1, '0', '0', '0', 'december', NULL, NULL),
+(16, 1, '0', '0', '0', 'december', NULL, NULL),
+(17, 1, '0', '0', '0', 'february', NULL, NULL),
+(18, 1, '0', '0', 'samanabad', 'april', NULL, NULL),
+(19, 1, '0', '0', 'samanabad', 'december', NULL, NULL),
+(20, 1, '0', '0', 'samanabad', 'november', NULL, NULL),
+(21, 1, '0', '0', 'samanabad', 'november', NULL, NULL),
+(22, 1, '0', '0', '0', 'july', NULL, NULL),
+(23, 1, '0', '0', '0', 'august', NULL, NULL),
+(24, 1, '0', '0', '0', 'june', NULL, NULL),
+(25, 1, '0', '0', '0', 'august', NULL, NULL),
+(26, 1, 'denim', 'denizenn', 'Kot Mohibbu', 'May', '2018-05-21 01:35:11', '2018-05-21 01:35:11');

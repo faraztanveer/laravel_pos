@@ -2,7 +2,52 @@
 @section('body')
 <div class="content" id="salesContent">
         <div class="container-fluid">
-          <div class="row">
+          <div class="row" id="billContainer" style="display:none;">
+            <div class="col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                      <div class="col-sm-6"><span >Dated: <span id="billDate"> </span> </span></div>
+                      <div class="col-sm-6"><span class="pull-right"  >Bill id: <span id="billId"></span> </span></div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-sm-6"><span  >Customer Name: <span id="customerName" ></span>    </span></div>
+                    <div class="col-sm-6"><span class="pull-right" >Customer Contact: <span id="customerPhone"></span>   </span></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Item Name</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Total</th>
+                          </tr>
+                        </thead>
+                        <tbody id="billTable" >
+                          
+                        </tbody>
+                      </table>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6">
+                          <span class="pull-right" >Sub-Total: <span id="billSubTotal"  ></span> </span>
+                          <br>
+                          <span class="pull-right"  >Paid: <span id="billPaid" ></span> </span> &nbsp;&nbsp;&nbsp; <span class="pull-right">Due: <span id="billDue" ></span> </span> 
+                          <br>           
+                          <button class="btn btn-primary btn-sm pull-right btn-fill mt-3" onclick="removeAll()" ><i class="fa fa-print"></i></button>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" id="saleContainer">
             <div class="col-sm-9">
               <div class="card border-primary">
                 <div class="card-body">
@@ -19,7 +64,7 @@
  <option>#{{$product->id}} &nbsp;&nbsp;&nbsp;{{$product->name}}</option>
  @endforeach
 </datalist>
-<button id="submit-item" class="btn btn-success btn-sm btn-fill">dalo</button>
+<button id="submit-item" class="btn btn-success btn-sm btn-fill">Add</button>
 </form>
                   </div>
                 </div>
@@ -78,13 +123,13 @@
                   <hr>
                   <div class="amount-div">
                     <table class="table">
-                      <th>Total</th>
                       <th>Due</th>
+                      <th>Paid</th>
                       <tbody class="text-center">
-                        <td>200.00
+                        <td><input  type="number" value="0" class="dueAmount form-control" name="totalAmount"  >
                           <small>PKR</small>
                         </td>
-                        <td style="border:0px;">200.00 </td>
+                        <td style="border:0px;"> <input type="number"  class="paidAmount form-control" name="dueAmount"> </td>
                       </tbody>
                     </table>
                   </div>
@@ -127,9 +172,23 @@ $(".total").each(function(){
    var  total = $(this).val();
      total = parseFloat(total.slice(0,total.indexOf('p')));
     subTotal+=total;
-globalTotal=subTotal;
+    $(".dueAmount").val(subTotal);
+    globalTotal=subTotal;
     
     });
+
+$(document).on("keyup keypress blur change", ".paidAmount", function() {
+
+var paid = $(this).val();
+var total =$(".total").val();
+total = parseFloat(total.slice(0,total.indexOf('p')));
+ 
+ var due = total-paid;
+ $(".dueAmount").val(due);
+
+
+});
+
 
 $('.subTotal').text(subTotal+" PKR");
 // console.log(subTotal);
@@ -427,6 +486,7 @@ $('.submitProducts').click(function(){
                 var discount = $('input[name="discount[]"]').map(function(){ 
                     return this.value; 
                 }).get();
+                var paid= $(".paidAmount").val();
 
 
 
@@ -440,13 +500,45 @@ $('.submitProducts').click(function(){
                 totalProductRs:totalProductRs,
                 customer:1,
                 grandTotal:globalTotal,
-                discount:discount
+                discount:discount,
+                paid:paid
             },
                 success: function (data) 
                 {
 
                   console.log(data);
-                  location.reload();
+                 $('#billContainer').css('display','block')
+
+
+
+
+                 $('#customerName').text(data[5]);
+                 $('#customerPhone').text(data[6]);
+                 $("#billId").text(data[7]);
+                 $("#billDate").text(data[8]);
+                 var paidTemp=data[9];
+                 var sTotal=data[10];
+                 var dueTemp=sTotal-paidTemp;
+                 $("#billPaid").text(paidTemp);
+                 $("#billSubTotal").text(sTotal);
+                 $("#billDue").text(dueTemp);
+                 
+
+
+
+                // $("billDate").text(data[]);
+                 
+                 
+                 var element="";
+                 var counter=0;
+                 while(counter<data[0].length)
+                 {
+                  element+="<tr><td>"+data[0][counter]+"</td><td>"+data[1][counter]+"</td><td>"+data[2][counter]+"</td><td>"+data[4][counter]+"</td></tr>";
+counter++;
+                 }
+                 $("#billTable").html(element);
+
+
                 }
  });
 
@@ -463,6 +555,23 @@ $("#tbUser").on('click', '.btnDelete', function () {
     $(this).closest('tr').remove();
     updateSubTotal();
 });
+
+
+function removeAll()
+{
+  $('#saleContainer').css('display','none');
+
+
+window.print();
+
+}
+
+function redirectToReceipt()
+{
+
+  
+}
+
 
 
 </script>

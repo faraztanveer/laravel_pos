@@ -153,6 +153,7 @@ return [
        
         Yajra\DataTables\DataTablesServiceProvider::class,
         SquareBoat\Alert\AlertServiceProvider::class,
+        Fx3costa\LaravelChartJs\Providers\ChartjsServiceProvider::class,
         /*
          * Application Service Providers...
          */

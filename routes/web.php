@@ -34,6 +34,7 @@ Route::get('pos/sales','posController@index');
 Route::post('pos/submitSale','posController@submitSale')->name('pos.submitSale');
 Route::get('pos/getItemDetail/{id}','posController@getItemDetail');
 Route::get('pos/getColors/{id}/{size}','posController@getColors');
+Route::get('pos/generateReceipt/{bill}', 'posController@generateReceipt')->name('pos.generateReceipt');
 Route::post('/storeCat','catBrandController@storeCat');
 Route::post('/storeBrand','catBrandController@storeBrand');
 Route::get('/getPropucts','productsController@getProducts')->name('get.products');

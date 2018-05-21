@@ -17,6 +17,7 @@ class CreateBillsTable extends Migration
             $table->increments('id');
             $table->integer('customer_id'); 
             $table->integer('grand_total'); 
+            $table->integer('paidAmount');
             $table->timestamps();
         });
     }

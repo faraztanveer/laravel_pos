@@ -33,10 +33,39 @@
 							</a>
 							</div>
 						</div>
+						
 					</div>
 				</div>
 			</div>
 		</div>
+		{{-- cahrts below --}}
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						
+						<h5>Monthly Sale</h5>
+							{!! $chartjs->render() !!}
+					
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						
+						<h5>Weekly Sale</h5>
+							{!! $chartjs->render() !!}
+					
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
 	</div>
 </div>
       

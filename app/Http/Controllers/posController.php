@@ -116,8 +116,11 @@ public function submitSale(Request $request)
     $bill=new bill;
     $bill->customer_id=$request->customer;
     $bill->grand_total=$request->grandTotal;
+    $bill->paidAmount=$request->paid;
     $bill->save();
+
     
+
     $bid=$bill->id;
     $pc= $request->pc;
     $quantity=$request->quantity;
@@ -134,7 +137,7 @@ public function submitSale(Request $request)
         $billDetail->pc_id=$pc[$i];
         $billDetail->quantity=$quantity[$i];
         $billDetail->discount=$discount[$i];
-        $str=$totalProductRs[0];
+        $str=$totalProductRs[$i];
         $str= explode(" ",$str,2);
         $str=(int)$str[0];
         $billDetail->total=$str;
@@ -143,6 +146,20 @@ public function submitSale(Request $request)
         
     }
 $billDetail = billDetail::where('bill_id',$bid)->get();
+$productName=[];
+$price=[];
+$quantity=[];
+$total=[];
+$subTotal=[];
+$disc=[];
+$customerName="";
+$customerNumber="";
+$billDate=Carbon::parse($bill->created_at);
+$billDate=$billDate->toFormattedDateString();
+$paidAmount=$bill->paidAmount;
+$sTotal=$bill->grand_total;
+
+$i=0;
     foreach($billDetail as $billDetail)
     {
 
@@ -155,18 +172,32 @@ $billDetail = billDetail::where('bill_id',$bid)->get();
        
         $month= Carbon::parse($bill->created_at);
         $dataSet->month= $month->format('F');
-       
           $dataSet->save();
         
+        $productName[$i]=$billDetail->productControl->products->name;
+        $price[$i]=$billDetail->productControl->products->currentPrice;
+        $quantity[$i]=$billDetail->quantity;
+        $disc[$i]=$billDetail->discount;
+        $total[$i]=$billDetail->total;
+        $customerName=$billDetail->bill->customer->name;
+        $customerNumber=$billDetail->bill->customer->phone;
+        
+$i++;
 
-
-
-
+  }
     
-    }
+
+
+    return response()->json([$productName,$price,$quantity,$disc,$total,$customerName,$customerNumber,$bid,$billDate,$paidAmount,$sTotal]);
     
-    return response()->json();
-    
+
+}
+
+
+public function generateReceipt($bill){
+    dd($bill);
+
+
 
 }
 
