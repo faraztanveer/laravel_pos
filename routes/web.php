@@ -27,7 +27,7 @@ Route::get('/product/delete/{id}', 'productsController@destroy');
 Route::get('/product/show/{id}', 'productsController@showProduct');
 Route::get('/categories/delete/{id}', 'catBrandController@destroy');
 Route::get('/brand/delete/{id}', 'catBrandController@destroyBrand');
-
+Route::get('/brand/report','catBrandController@brandReport');
 
 // pos routes
 

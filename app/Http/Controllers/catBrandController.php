@@ -5,7 +5,7 @@ use App\brand;
 use App\category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use DB;
 class catBrandController extends Controller
 {
     //
@@ -72,6 +72,16 @@ public function destroyBrand($id)
 brand::destroy($id);
 $status=true;
 return response()->json($status);
+
+}
+
+public function brandReport()
+{
+	$id=Auth::user()->id;
+    
+
+    $brandReport= DB::select("SELECT brand , count(brand) as totalBrand FROM data_sets WHERE admin_id=$id GROUP by brand order by totalBrand");
+return response()->json($brandReport);
 
 }
 

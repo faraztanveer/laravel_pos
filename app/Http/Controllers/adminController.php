@@ -8,6 +8,8 @@ use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\csvlogs;
+use League\Csv\Writer;
 
 
 
@@ -15,6 +17,48 @@ class adminController extends Controller
 {
     
     public function index(){
+
+        $date = Carbon::now();
+        $currentYear= $date->format('Y');
+        $currentMonth= $date->format('F');
+        $currentWeek= $date->weekOfMonth;
+        
+ if($date->format('d')=='1')
+ {
+       
+    $csvDate= csvlogs::select('created_at')->orderBy('id', 'desc')->first();
+    if($csvDate)
+    $csvDate->toArray();
+    $csvDate=Carbon::parse($csvDate['created_at']);
+    if($date->format('d Y F') != $csvDate->format('d Y F'))
+    {
+        $data=DB::select('SELECT category,location,month,count(id) as itemSold FROM data_sets GROUP by category,month,location');
+     
+    $csv = Writer::createFromPath('data_set.csv');
+    $csv->insertOne(['category', 'location', 'month','item sold']);
+    for($i=0; $i<count($data); $i++)
+    {
+       
+        $csv->insertOne([$data[$i]->category, $data[$i]->location, $data[$i]->month ,$data[$i]->itemSold]);
+
+      
+
+    }
+    
+    
+        $csvlogs = new csvlogs;
+        $csvlogs->activity='inserted';
+        $csvlogs->save();
+    
+    }
+   
+
+ }
+        
+ 
+
+
+
        $id=Auth::user()->id;
         
 $productCount=product::where('admin_id',$id)->count();
@@ -32,10 +76,6 @@ foreach($monthlyReport as $monthlyReport)
 
 }
 
-$date = Carbon::now();
-$currentYear= $date->format('Y');
-$currentMonth= $date->format('F');
-$currentWeek= $date->weekOfMonth;
 
 //------------- daily report
 
@@ -133,8 +173,41 @@ $i=0;
         ->options([]);
 
 
+//---------------------
+$brandReport= DB::select("SELECT brand , count(brand) as totalBrand FROM data_sets WHERE admin_id=$id GROUP by brand order by totalBrand");
+$brandName=[];
+$bTotalCount=[];
+$i=0;
 
-return view('admin.index',compact(['productCount','categoryCount','brandCount','chartjs','chartjs1','chartjs2']));
+ foreach($brandReport as $brand)
+ {
+    $brandName[$i]=$brand->brand;
+    $bTotalCount[$i]=$brand->totalBrand;
+    $i++;
+ }
+        $brandChart = app()->chartjs
+        ->name('brandChart')
+        ->type('pie')
+        ->size(['width' => 400, 'height' => 200])
+        ->labels($brandName)
+        ->datasets([
+            [
+                "label" => "brands",
+                'backgroundColor' => "rgba(38, 185, 154, 0.31)",
+                'borderColor' => "rgba(38, 185, 154, 0.7)",
+                "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
+                "pointBackgroundColor" => "rgba(38, 185, 154, 0.7)",
+                "pointHoverBackgroundColor" => "#fff",
+                "pointHoverBorderColor" => "rgba(220,220,220,1)",
+                'data' => $bTotalCount,
+            ]
+        ])
+        ->options([]);
+
+//----------------------------
+
+
+return view('admin.index',compact(['productCount','categoryCount','brandCount','chartjs','chartjs1','chartjs2','brandChart']));
 
     }
 
