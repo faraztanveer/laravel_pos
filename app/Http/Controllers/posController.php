@@ -9,7 +9,7 @@ use App\bill;
 use App\billDetail;
 use App\dataSet;
 use Carbon\Carbon;
-
+use App\Productcontrol;
 class posController extends Controller
 {
     /**
@@ -142,6 +142,10 @@ public function submitSale(Request $request)
         $str=(int)$str[0];
         $billDetail->total=$str;
         $billDetail->save();
+        
+         $productControl= Productcontrol::find($pc[$i]);
+         $productControl->quantity=$productControl->quantity-$quantity[$i];
+         $productControl->save();
         $i++;
         
     }
@@ -170,8 +174,13 @@ $i=0;
         $dataSet->brand=$billDetail->productControl->products->brand->name;
         $dataSet->location=$billDetail->bill->customer->town->towns;
        
-        $month= Carbon::parse($bill->created_at);
-        $dataSet->month= $month->format('F');
+        $date= Carbon::parse($bill->created_at);
+        $dataSet->month= $date->format('F');
+        $dataSet->year= $date->format('Y');
+        $dataSet->day= $date->format('D');
+        $dataSet->week= $date->weekOfMonth;
+        
+        
           $dataSet->save();
         
         $productName[$i]=$billDetail->productControl->products->name;

@@ -87,6 +87,27 @@ $.ajax({
 
 }
 
+function showProduct(id){
+
+
+
+
+$.ajax({
+                url: 'product/show/'+id,
+                success: function (data) 
+                {
+
+                  console.log(data.product.name);  
+                }
+}
+);
+
+
+
+}
+
+
+
 </script>
 
 

@@ -24,6 +24,7 @@ Route::get('product/create/{id}','ProductsController@createImagesPage')->name('a
 Route::post('product/storeimages','ProductsController@storeImages');
 Route::get('categories','catBrandController@index');
 Route::get('/product/delete/{id}', 'productsController@destroy');
+Route::get('/product/show/{id}', 'productsController@showProduct');
 Route::get('/categories/delete/{id}', 'catBrandController@destroy');
 Route::get('/brand/delete/{id}', 'catBrandController@destroyBrand');
 

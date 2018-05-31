@@ -27,7 +27,7 @@
 							<a href="#">	
 								<div class="card bg-warning">
 										<div class="card-body">
-											<h5 class="main-page-card-h5">Total products <i class="fa fa-database"></i> <span class="badge badge-danger pull-right" style="font-size: 20px;">{{ $brandCount}}</span></h5>
+											<h5 class="main-page-card-h5">Total products <i class="fa fa-database"></i> <span class="badge badge-danger pull-right" style="font-size: 20px;">{{ $productCount}}</span></h5>
 										</div>
 								</div>
 							</a>
@@ -56,8 +56,8 @@
 				<div class="card">
 					<div class="card-body">
 						
-						<h5>Weekly Sale</h5>
-							{!! $chartjs->render() !!}
+						<h5>By Category</h5>
+							{!! $chartjs1->render() !!}
 					
 
 					</div>
@@ -65,7 +65,32 @@
 			</div>
 
 		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						
+						<h5>daily Sale</h5>
+							{!! $chartjs2->render() !!}
+					
 
+					</div>
+				</div>
+			</div>
+
+			{{-- <div class="col-sm-6">
+				<div class="card">
+					<div class="card-body">
+						
+						<h5>weekly</h5>
+							{!! $chartjs3->render() !!}
+					
+
+					</div>
+				</div>
+			</div> --}}
+
+		</div>
 	</div>
 </div>
       

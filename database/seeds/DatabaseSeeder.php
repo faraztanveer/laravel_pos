@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::disableQueryLog();
-DB::unprepared(file_get_contents('database/seeds/sql/insertCat.sql'));
+DB::unprepared(file_get_contents('database/seeds/insertCat.sql'));
 
         // $this->call(UsersTableSeeder::class);
     }

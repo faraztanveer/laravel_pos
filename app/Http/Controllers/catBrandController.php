@@ -15,29 +15,29 @@ class catBrandController extends Controller
     {
 
     $id=Auth::user()->id;
-    $categories= category::where('admin_id',$id)->get();
-    $brands= brand::where('admin_id',$id)->get();
+    $categories= category::where('admin_id',$id)->paginate(10);
+    $brands= brand::where('admin_id',$id)->paginate(10);
  
         
 return view('admin.cat_brand',compact(['categories','brands']));
 
     }
 
-public function storeCat(Request $request)
-{
-	$id=Auth::user()->id;
-
-$category = new category;
-//	print_r($request); exit;
-$cat =$request->catName;
-
-$category->admin_id=$id; 
-$category->name=$cat; 
-$category->save();
-
- return response()->json($category);
-
-}
+    public function storeCat(Request $request)
+    {
+        $id=Auth::user()->id;
+    
+    $category = new category;
+    //	print_r($request); exit;
+    $cat =$request->catName;
+    
+    $category->admin_id=$id; 
+    $category->name=$cat; 
+    $category->save();
+    
+     return response()->json($category);
+    
+    }
 
 
 

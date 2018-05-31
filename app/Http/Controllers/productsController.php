@@ -351,13 +351,28 @@ return Datatables::of($productsdata) ->addColumn('photo', function($productsdata
     }
     return '<img class="rounded-square" width="50" height="50" src="'. asset($productsdata->photo) .'" alt="">';
 })->addColumn('action', function($productsdata){
-                return '<a href="#" class="btn btn-info btn-xs"> Show</a> ' .
+                return '<a href="#" onclick="showProduct('. $productsdata->id .')" class="btn btn-info btn-xs"> Show</a> ' .
                        '<a href="products/'. $productsdata->id .'/edit" class="btn btn-primary btn-xs"> Edit</a> ' .
                        '<a onclick="deleteProduct('. $productsdata->id .')" class="btn btn-danger btn-xs"> Delete</a>';
             })->rawColumns(['photo','action'])->make(true);
 
 //dd($productsdata);
 // return Datatables::of(product::query())->make(true);
+}
+
+
+public function showProduct($id)
+{
+
+    $product = product::find($id);
+ return response()->json(['product'=>$product->first(),
+ 
+ 'productControl'=>$product->productControls,
+ 'personalCategory'=>$product->category->name,
+ 'generalCategory'=>$product->generalCategory->name,
+ 'brand'=>$product->brand->name
+ ]);
+
 }
 
 }

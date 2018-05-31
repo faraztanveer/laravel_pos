@@ -77,7 +77,9 @@
       @endforeach
       
       </tbody>
+    
     </table>
+    {{$categories->links()}}
   </div>
   <div class="tab-pane fade" id="nav-brand" role="tabpanel" aria-labelledby="nav-brand-tab">
 
@@ -104,7 +106,7 @@
       </tbody>
     </table>
 
-
+    
   </div>
   
 </div>

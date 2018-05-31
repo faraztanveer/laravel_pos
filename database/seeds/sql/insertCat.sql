@@ -204,3 +204,8 @@ INSERT INTO `data_sets` (`id`, `admin_id`, `category`, `brand`, `location`, `mon
 (24, 1, '0', '0', '0', 'june', NULL, NULL),
 (25, 1, '0', '0', '0', 'august', NULL, NULL),
 (26, 1, 'denim', 'denizenn', 'Kot Mohibbu', 'May', '2018-05-21 01:35:11', '2018-05-21 01:35:11');
+
+
+INSERT INTO `customers` (`id`, `name`, `location_id`, `phone`, `created_at`, `updated_at`) VALUES
+(1, 'sharjeel memon', 5, '0123456', NULL, NULL),
+(2, 'khwaja asif', 1, '123456', NULL, NULL);
