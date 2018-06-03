@@ -15,11 +15,13 @@ class CreateProductControlsTable extends Migration
     {
         Schema::create('productControls', function (Blueprint $table) {
              $table->increments('id');
-            $table->integer('product_id');
+             $table->UnsignedInteger('product_id');
             $table->string('color')->nullable();
             $table->string('size')->nullable();
             $table->integer('quantity')->default('0');
             $table->string('colorPhoto')->default('noimage.jpg');
+            $table->foreign('product_id')->references('id')->on('products')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }
