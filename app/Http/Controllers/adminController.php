@@ -25,13 +25,22 @@ class adminController extends Controller
         
  if($date->format('d')=='1')
  {
-       
+    
     $csvDate= csvlogs::select('created_at')->orderBy('id', 'desc')->first();
-    if($csvDate)
+  
+    if($csvDate !=null)
+    {
     $csvDate->toArray();
     $csvDate=Carbon::parse($csvDate['created_at']);
+}
+
+else{
+    $csvDate=Carbon::tomorrow();
+    
+}
     if($date->format('d Y F') != $csvDate->format('d Y F'))
     {
+        
         $data=DB::select('SELECT category,location,month,count(id) as itemSold FROM data_sets GROUP by category,month,location');
      
     $csv = Writer::createFromPath('data_set.csv');
@@ -51,7 +60,6 @@ class adminController extends Controller
         $csvlogs->save();
     
     }
-   
 
  }
         
